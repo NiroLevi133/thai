@@ -34,44 +34,50 @@ async function writeTrip(data: unknown, pathname = PATH) {
   });
 }
 
-export default async function handler(req: Request): Promise<Response> {
-  const json = (body: unknown, status = 200) =>
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
-    });
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+  });
 
+/**
+ * ייצוא לפי שם המתודה (GET/PUT) ולא `export default` — ב-Vercel ייצוא
+ * ברירת-מחדל מתפרש כחתימת Node ‏`(req, res)`, והערך המוחזר ממנו נזרק,
+ * מה שגורם לבקשה להיתקע עד timeout.
+ */
+export async function GET(): Promise<Response> {
   try {
-    if (req.method === 'GET') {
-      const trip = await readTrip();
-      if (trip) return json(trip);
+    const trip = await readTrip();
+    if (trip) return json(trip);
 
-      // ריצה ראשונה אחרי דיפלוי — מזריעים מהקובץ שבריפו ושומרים
-      await writeTrip(seed);
-      return json(seed);
-    }
-
-    if (req.method === 'PUT') {
-      const body = await req.json();
-
-      // בדיקת שפיות: לא נותנים לגוף ריק או פגום למחוק את הטיול
-      if (!body || typeof body !== 'object' || !Array.isArray(body.destinations)) {
-        return json({ error: 'מבנה נתונים לא תקין — השמירה בוטלה' }, 400);
-      }
-
-      // גיבוי יומי של המצב הקודם, לפני הדריסה
-      const previous = await readTrip();
-      if (previous) {
-        await writeTrip(previous, backupPath()).catch((e) => console.error('גיבוי נכשל', e));
-      }
-
-      await writeTrip(body);
-      return json({ ok: true, savedAt: new Date().toISOString() });
-    }
-
-    return json({ error: 'method not allowed' }, 405);
+    // ריצה ראשונה אחרי דיפלוי — מזריעים מהקובץ שבריפו ושומרים
+    await writeTrip(seed);
+    return json(seed);
   } catch (err) {
-    console.error('שגיאת אחסון:', err);
+    console.error('קריאה נכשלה:', err);
+    return json({ error: String(err) }, 500);
+  }
+}
+
+export async function PUT(req: Request): Promise<Response> {
+  try {
+    const body = await req.json();
+
+    // בדיקת שפיות: לא נותנים לגוף ריק או פגום למחוק את הטיול
+    if (!body || typeof body !== 'object' || !Array.isArray(body.destinations)) {
+      return json({ error: 'מבנה נתונים לא תקין — השמירה בוטלה' }, 400);
+    }
+
+    // גיבוי יומי של המצב הקודם, לפני הדריסה
+    const previous = await readTrip();
+    if (previous) {
+      await writeTrip(previous, backupPath()).catch((e) => console.error('גיבוי נכשל', e));
+    }
+
+    await writeTrip(body);
+    return json({ ok: true, savedAt: new Date().toISOString() });
+  } catch (err) {
+    console.error('שמירה נכשלה:', err);
     return json({ error: String(err) }, 500);
   }
 }
