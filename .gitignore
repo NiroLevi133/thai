@@ -9,3 +9,4 @@ data/trip.bak.json
 # משתני סביבה (טוקן ה-Blob)
 .env
 .env.local
+.env*

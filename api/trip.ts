@@ -1,5 +1,7 @@
 import { get, put } from '@vercel/blob';
-import seed from '../data/trip.json';
+// ב-Node 24 (ESM) ייבוא JSON מחייב import attribute, אחרת הפונקציה קורסת בטעינה.
+// הייבוא הסטטי גם מבטיח ש-Vercel יארוז את הקובץ יחד עם הפונקציה.
+import seed from '../data/trip.json' with { type: 'json' };
 
 /**
  * שמירת נתוני הטיול ב-Vercel Blob.
