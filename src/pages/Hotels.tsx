@@ -152,20 +152,23 @@ function HotelRow({ hotel: h, destStart, destEnd }: { hotel: Hotel; destStart: s
   };
 
   return (
-    <div className="p-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="btn-icon shrink-0"
-          aria-expanded={expanded}
-          aria-label={`${expanded ? 'סגור' : 'ערוך'} את ${h.name}`}
-        >
-          <ChevronDown size={16} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
-        </button>
+    <div>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex w-full items-center gap-2 p-3 text-start"
+        aria-expanded={expanded}
+        aria-label={`${expanded ? 'סגור' : 'הצג'} פרטי ${h.name}`}
+      >
+        <ChevronDown size={16} className={`shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+        <span className="ltr min-w-0 flex-1 truncate font-medium">{h.name}</span>
+        <span className="shrink-0 text-xs tabular-nums muted">
+          {h.checkIn || h.checkOut ? `${fmt(h.checkIn)} – ${fmt(h.checkOut)}` : 'תאריכים לא נקבעו'}
+        </span>
+      </button>
 
-        <div className="min-w-0 flex-1">
+      {expanded && (
+        <div className="space-y-3 px-3 pb-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="ltr font-medium">{h.name}</span>
             <Stars n={h.stars} />
             <span className="chip bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
               {h.area === 'central' ? 'מרכזי' : 'מרוחק'}
@@ -176,70 +179,65 @@ function HotelRow({ hotel: h, destStart, destEnd }: { hotel: Hotel; destStart: s
                 <TriangleAlert size={11} /> סתירה בתאריך ביטול
               </span>
             )}
+            {h.freeCancelUntil && (
+              <span className={`chip tabular-nums ${cancelTone}`}>
+                {cancelDays !== null && cancelDays >= 0 ? `ביטול חינם: ${cancelDays} ימים` : 'חלון הביטול נסגר'}
+              </span>
+            )}
+            <div className="ms-auto text-end">
+              <div className="font-bold tabular-nums">{ils(h.totalPrice)}</div>
+              {h.pricePerNight && <div className="text-xs muted">{ils(h.pricePerNight)}/לילה</div>}
+            </div>
           </div>
-          {h.status === 'booked' && (
-            <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs muted">
-              <span className="tabular-nums">{fmt(h.checkIn)} – {fmt(h.checkOut)} · {h.nights} לילות</span>
+
+          {h.status === 'booked' && (h.bookedVia || h.confirmationNumber) && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs muted">
               {h.bookedVia && <span>{h.bookedVia}</span>}
               {h.confirmationNumber && <span className="ltr tabular-nums">#{h.confirmationNumber}</span>}
             </div>
           )}
-          {h.notes && <p className="mt-0.5 text-xs muted">{h.notes}</p>}
-          {h.links?.length > 0 && <div className="mt-1"><LinkChipList links={h.links} /></div>}
-        </div>
+          {h.notes && <p className="text-xs muted">{h.notes}</p>}
+          {h.links?.length > 0 && <LinkChipList links={h.links} />}
 
-        {h.freeCancelUntil && (
-          <span className={`chip shrink-0 tabular-nums ${cancelTone}`}>
-            {cancelDays !== null && cancelDays >= 0 ? `ביטול חינם: ${cancelDays} ימים` : 'חלון הביטול נסגר'}
-          </span>
-        )}
-
-        <div className="shrink-0 text-end">
-          <div className="font-bold tabular-nums">{ils(h.totalPrice)}</div>
-          {h.pricePerNight && <div className="text-xs muted">{ils(h.pricePerNight)}/לילה</div>}
-        </div>
-
-        <div className="flex shrink-0 items-center gap-1">
-          {h.url && (
-            <a href={h.url} target="_blank" rel="noreferrer" className="btn-icon"
-               aria-label={`פתח את דף ההזמנה של ${h.name}`}>
-              <ExternalLink size={14} />
-            </a>
-          )}
-          {h.status === 'booked' ? (
-            <button
-              onClick={() => updateHotel(h.id, { paid: !h.paid, paidAmount: !h.paid ? h.totalPrice : null })}
-              className={`btn !px-2.5 !py-1.5 text-xs ${
-                h.paid
-                  ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                  : 'border border-neutral-200 hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800'
-              }`}
-            >
-              <Check size={13} /> {h.paid ? 'שולם' : 'סמן כשולם'}
-            </button>
-          ) : h.status === 'candidate' ? (
-            <>
-              <button onClick={markBooked} className="btn-primary !px-2.5 !py-1.5 text-xs">
-                <Check size={13} /> סגרתי
-              </button>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {h.url && (
+              <a href={h.url} target="_blank" rel="noreferrer" className="btn-icon"
+                 aria-label={`פתח את דף ההזמנה של ${h.name}`}>
+                <ExternalLink size={14} />
+              </a>
+            )}
+            {h.status === 'booked' ? (
               <button
-                onClick={() => updateHotel(h.id, { status: 'rejected' })}
-                className="btn-icon" aria-label={`פסול את ${h.name}`}
+                onClick={() => updateHotel(h.id, { paid: !h.paid, paidAmount: !h.paid ? h.totalPrice : null })}
+                className={`btn !px-2.5 !py-1.5 text-xs ${
+                  h.paid
+                    ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                    : 'border border-neutral-200 hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800'
+                }`}
               >
-                <X size={14} />
+                <Check size={13} /> {h.paid ? 'שולם' : 'סמן כשולם'}
               </button>
-            </>
-          ) : (
-            <button onClick={() => updateHotel(h.id, { status: 'candidate' })} className="btn-icon"
-                    aria-label={`החזר את ${h.name} למועמדים`}>
-              <Undo2 size={14} />
-            </button>
-          )}
-        </div>
-      </div>
+            ) : h.status === 'candidate' ? (
+              <>
+                <button onClick={markBooked} className="btn-primary !px-2.5 !py-1.5 text-xs">
+                  <Check size={13} /> סגרתי
+                </button>
+                <button
+                  onClick={() => updateHotel(h.id, { status: 'rejected' })}
+                  className="btn-icon" aria-label={`פסול את ${h.name}`}
+                >
+                  <X size={14} />
+                </button>
+              </>
+            ) : (
+              <button onClick={() => updateHotel(h.id, { status: 'candidate' })} className="btn-icon"
+                      aria-label={`החזר את ${h.name} למועמדים`}>
+                <Undo2 size={14} />
+              </button>
+            )}
+          </div>
 
-      {expanded && (
-        <div className="mt-3 grid gap-3 rounded-xl bg-neutral-50 p-3 dark:bg-neutral-950/60 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 rounded-xl bg-neutral-50 p-3 dark:bg-neutral-950/60 sm:grid-cols-2 lg:grid-cols-4">
           <Field label="צ׳ק-אין">
             <input type="date" className="input" value={h.checkIn ?? ''}
                    onChange={(e) => updateHotel(h.id, { checkIn: e.target.value || null })} />
@@ -292,6 +290,7 @@ function HotelRow({ hotel: h, destStart, destEnd }: { hotel: Hotel; destStart: s
             >
               <Trash2 size={13} /> מחק
             </button>
+          </div>
           </div>
         </div>
       )}

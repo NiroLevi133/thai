@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BedDouble, Bus, Ticket, MapPin, TriangleAlert, PlaneLanding, UtensilsCrossed } from 'lucide-react';
+import { BedDouble, Bus, Ticket, MapPin, TriangleAlert, PlaneLanding, UtensilsCrossed, ChevronDown } from 'lucide-react';
 import { useTrip } from '../store';
 import { gapsByDestination } from '../lib/gaps';
 import { fmt, fmtHe, nightsBetween, toDate, dayLetter } from '../lib/dates';
@@ -43,115 +43,128 @@ export default function Itinerary() {
 }
 
 function DestinationsView({ gaps }: { gaps: ReturnType<typeof gapsByDestination> }) {
-  const trip = useTrip((s) => s.trip)!;
-
   return (
     <div className="space-y-3">
       <NightsLegend />
-      {gaps.map((g) => {
-        const d = g.destination;
-        const booked = trip.hotels.filter((h) => h.destinationId === d.id && h.status === 'booked');
-        const candidates = trip.hotels.filter((h) => h.destinationId === d.id && h.status === 'candidate');
-        const transfer = trip.transport.find((t) => t.fromDestinationId === d.id);
-        const attractions = trip.attractions.filter((a) => a.destinationId === d.id);
+      {gaps.map((g) => <DestinationCard key={g.destination.id} g={g} />)}
+    </div>
+  );
+}
 
-        return (
-          <div key={d.id} className="card overflow-hidden">
-            <div className="flex items-center gap-3 border-b border-neutral-100 p-4 dark:border-neutral-800"
-                 style={{ borderInlineStartWidth: 5, borderInlineStartColor: d.color, borderInlineStartStyle: 'solid' }}>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-bold">{d.name}</h3>
-                <p className="text-xs muted">
-                  {fmtHe(d.startDate)} – {fmtHe(d.endDate)} · {d.nights} לילות
-                  {d.whereToSleep && <> · <span>{d.whereToSleep}</span></>}
+function DestinationCard({ g }: { g: ReturnType<typeof gapsByDestination>[number] }) {
+  const trip = useTrip((s) => s.trip)!;
+  const [expanded, setExpanded] = useState(false);
+  const d = g.destination;
+  const booked = trip.hotels.filter((h) => h.destinationId === d.id && h.status === 'booked');
+  const candidates = trip.hotels.filter((h) => h.destinationId === d.id && h.status === 'candidate');
+  const transfer = trip.transport.find((t) => t.fromDestinationId === d.id);
+  const attractions = trip.attractions.filter((a) => a.destinationId === d.id);
+
+  return (
+    <div className="card overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex w-full items-center gap-3 p-4 text-start"
+        style={{ borderInlineStartWidth: 5, borderInlineStartColor: d.color, borderInlineStartStyle: 'solid' }}
+        aria-expanded={expanded}
+      >
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg font-bold">{d.name}</h3>
+          <p className="text-xs muted">{fmtHe(d.startDate)} – {fmtHe(d.endDate)} · {d.nights} לילות</p>
+        </div>
+        <ChevronDown size={18} className={`shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+      </button>
+
+      {expanded && (
+        <div className="border-t border-neutral-100 dark:border-neutral-800">
+          {(d.whereToSleep || d.nightsConflict) && (
+            <div className="space-y-1 px-4 pt-3">
+              {d.whereToSleep && <p className="text-xs muted">{d.whereToSleep}</p>}
+              {d.nightsConflict && (
+                <p className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
+                  <TriangleAlert size={12} />
+                  באקסל נרשמו {d.nightsConflict} לילות — טווח התאריכים נותן {d.nights}
                 </p>
-                {d.nightsConflict && (
-                  <p className="mt-1 flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
-                    <TriangleAlert size={12} />
-                    באקסל נרשמו {d.nightsConflict} לילות — טווח התאריכים נותן {d.nights}
-                  </p>
-                )}
-              </div>
-              <div className="text-end">
-                <NightsStrip nights={g.nights} />
-                <div className="mt-1 text-xs muted">
-                  {g.coveredCount}/{g.nights.length} לילות
+              )}
+            </div>
+          )}
+
+          <div className="flex items-center justify-end gap-2 px-4 pt-3">
+            <span className="text-xs muted">{g.coveredCount}/{g.nights.length} לילות</span>
+            <NightsStrip nights={g.nights} />
+          </div>
+
+          <div className="grid gap-4 p-4 md:grid-cols-2">
+            <div>
+              <h4 className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-neutral-500">
+                <BedDouble size={13} /> לינה
+              </h4>
+              {booked.map((h) => (
+                <div key={h.id} className="mb-1.5 flex items-center gap-2 rounded-lg bg-emerald-50 px-2.5 py-1.5 text-sm dark:bg-emerald-950/40">
+                  <span className="ltr min-w-0 flex-1 truncate font-medium">{h.name}</span>
+                  <span className="shrink-0 text-xs tabular-nums text-neutral-500">
+                    {fmt(h.checkIn)}–{fmt(h.checkOut)}
+                  </span>
+                  <span className="shrink-0 text-xs font-semibold tabular-nums">{ils(h.totalPrice)}</span>
                 </div>
-              </div>
+              ))}
+              {g.openRanges.map((r) => (
+                <Link
+                  key={r.from}
+                  to="/hotels"
+                  className="mb-1.5 flex items-center gap-2 rounded-lg bg-red-50 px-2.5 py-1.5 text-sm text-red-700 hover:bg-red-100 dark:bg-red-950/40 dark:text-red-300"
+                >
+                  <span className="flex flex-1 items-center gap-1.5 font-medium">
+                    <TriangleAlert size={13} aria-hidden /> {r.count} לילות ללא מלון
+                  </span>
+                  <span className="text-xs tabular-nums">{fmt(r.from)}–{fmt(r.checkout)}</span>
+                </Link>
+              ))}
+              {candidates.length > 0 && (
+                <Link to="/hotels" className="mt-1 block text-xs text-jungle-600 hover:underline dark:text-jungle-400">
+                  {candidates.length} מועמדים לבחירה ←
+                </Link>
+              )}
             </div>
 
-            <div className="grid gap-4 p-4 md:grid-cols-2">
-              <div>
-                <h4 className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-neutral-500">
-                  <BedDouble size={13} /> לינה
-                </h4>
-                {booked.map((h) => (
-                  <div key={h.id} className="mb-1.5 flex items-center gap-2 rounded-lg bg-emerald-50 px-2.5 py-1.5 text-sm dark:bg-emerald-950/40">
-                    <span className="ltr min-w-0 flex-1 truncate font-medium">{h.name}</span>
-                    <span className="shrink-0 text-xs tabular-nums text-neutral-500">
-                      {fmt(h.checkIn)}–{fmt(h.checkOut)}
-                    </span>
-                    <span className="shrink-0 text-xs font-semibold tabular-nums">{ils(h.totalPrice)}</span>
-                  </div>
-                ))}
-                {g.openRanges.map((r) => (
-                  <Link
-                    key={r.from}
-                    to="/hotels"
-                    className="mb-1.5 flex items-center gap-2 rounded-lg bg-red-50 px-2.5 py-1.5 text-sm text-red-700 hover:bg-red-100 dark:bg-red-950/40 dark:text-red-300"
-                  >
-                    <span className="flex flex-1 items-center gap-1.5 font-medium">
-                      <TriangleAlert size={13} aria-hidden /> {r.count} לילות ללא מלון
-                    </span>
-                    <span className="text-xs tabular-nums">{fmt(r.from)}–{fmt(r.checkout)}</span>
-                  </Link>
-                ))}
-                {candidates.length > 0 && (
-                  <Link to="/hotels" className="mt-1 block text-xs text-jungle-600 hover:underline dark:text-jungle-400">
-                    {candidates.length} מועמדים לבחירה ←
-                  </Link>
-                )}
-              </div>
-
-              <div className="space-y-3">
-                {transfer && (
-                  <div>
-                    <h4 className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-neutral-500">
-                      <Bus size={13} /> מעבר ליעד הבא
-                    </h4>
-                    <p className="whitespace-pre-line text-sm text-neutral-700 dark:text-neutral-300">
-                      {transfer.description}
-                    </p>
-                  </div>
-                )}
-                {attractions.length > 0 && (
-                  <div className="space-y-2">
-                    {([
-                      ['attraction', 'אטרקציות', Ticket],
-                      ['restaurant', 'מסעדות', UtensilsCrossed],
-                    ] as const).map(([kind, title, Icon]) => {
-                      const list = attractions.filter((a) => a.kind === kind);
-                      if (!list.length) return null;
-                      return (
-                        <div key={kind}>
-                          <h4 className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold muted">
-                            <Icon size={13} aria-hidden /> {title} ({list.length})
-                          </h4>
-                          <div className="flex flex-wrap gap-1">
-                            {list.map((a) => (
-                              <span key={a.id} className="chip bg-sand-100 dark:bg-neutral-800">{a.name}</span>
-                            ))}
-                          </div>
+            <div className="space-y-3">
+              {transfer && (
+                <div>
+                  <h4 className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-neutral-500">
+                    <Bus size={13} /> מעבר ליעד הבא
+                  </h4>
+                  <p className="whitespace-pre-line text-sm text-neutral-700 dark:text-neutral-300">
+                    {transfer.description}
+                  </p>
+                </div>
+              )}
+              {attractions.length > 0 && (
+                <div className="space-y-2">
+                  {([
+                    ['attraction', 'אטרקציות', Ticket],
+                    ['restaurant', 'מסעדות', UtensilsCrossed],
+                  ] as const).map(([kind, title, Icon]) => {
+                    const list = attractions.filter((a) => a.kind === kind);
+                    if (!list.length) return null;
+                    return (
+                      <div key={kind}>
+                        <h4 className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold muted">
+                          <Icon size={13} aria-hidden /> {title} ({list.length})
+                        </h4>
+                        <div className="flex flex-wrap gap-1">
+                          {list.map((a) => (
+                            <span key={a.id} className="chip bg-sand-100 dark:bg-neutral-800">{a.name}</span>
+                          ))}
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
-        );
-      })}
+        </div>
+      )}
     </div>
   );
 }
