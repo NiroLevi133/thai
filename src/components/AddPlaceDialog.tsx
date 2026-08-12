@@ -109,8 +109,8 @@ export default function AddPlaceDialog({
             <h2 className="text-lg font-extrabold">
               {meta ? `${meta.label} חדשה` : 'מה מוסיפים?'}
             </h2>
-            <p className="ltr text-xs muted">
-              {destination.name} · {fmt(destination.startDate)}–{fmt(destination.endDate)}
+            <p className="text-xs muted">
+              {destination.name} · <span className="ltr">{fmt(destination.startDate)}–{fmt(destination.endDate)}</span>
             </p>
           </div>
           <button onClick={onClose} className="btn-icon shrink-0" aria-label="סגור">

@@ -64,7 +64,7 @@ export default function Hotels() {
               className="flex items-center gap-3 p-3"
               style={{ borderInlineStartWidth: 5, borderInlineStartColor: d.color, borderInlineStartStyle: 'solid' }}
             >
-              <h3 className="ltr font-bold">{d.name}</h3>
+              <h3 className="font-bold">{d.name}</h3>
               <span className="text-xs muted">
                 {fmt(d.startDate)}–{fmt(d.endDate)} · {d.nights} לילות
               </span>

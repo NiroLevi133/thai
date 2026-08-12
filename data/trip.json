@@ -5,51 +5,51 @@
   "destinations": [
     {
       "id": "koh-samui",
-      "name": "Koh Samui",
+      "name": "קו סמוי",
       "order": 0,
       "startDate": "2026-12-09",
       "endDate": "2026-12-13",
       "nights": 4,
       "nightsConflict": null,
       "color": "#DCEBFB",
-      "whereToSleep": "מיקום מרכזי - Chaweng או Fisherman's Village"
+      "whereToSleep": "מיקום מרכזי - צ׳אוונג או פישרמנס וילג׳"
     },
     {
       "id": "ko-tao",
-      "name": "Ko Tao",
+      "name": "קו טאו",
       "order": 1,
       "startDate": "2026-12-13",
       "endDate": "2026-12-17",
       "nights": 4,
       "nightsConflict": null,
       "color": "#D6F2EF",
-      "whereToSleep": "מיקום מרכזי - Sairee Beach או Mae Haad"
+      "whereToSleep": "מיקום מרכזי - חוף סאירי או מאה האד"
     },
     {
       "id": "koh-phangan",
-      "name": "Koh Phangan",
+      "name": "קו פנגן",
       "order": 2,
       "startDate": "2026-12-17",
       "endDate": "2026-12-19",
       "nights": 2,
       "nightsConflict": null,
       "color": "#FDF6D3",
-      "whereToSleep": "מיקום מרכזי -  Thong Sala או Haad Rin"
+      "whereToSleep": "מיקום מרכזי - תונג סאלה או האד ריין"
     },
     {
       "id": "krabi",
-      "name": "Krabi",
+      "name": "קרבי",
       "order": 3,
       "startDate": "2026-12-19",
       "endDate": "2026-12-24",
       "nights": 5,
       "nightsConflict": null,
       "color": "#DDF1DD",
-      "whereToSleep": "מיקום מרכזי -  Ao Nang"
+      "whereToSleep": "מיקום מרכזי - אאו נאנג"
     },
     {
       "id": "ko-lanta",
-      "name": "Ko Lanta",
+      "name": "קו לנטה",
       "order": 4,
       "startDate": "2026-12-24",
       "endDate": "2026-12-26",
@@ -60,7 +60,7 @@
     },
     {
       "id": "ko-phi-phi",
-      "name": "KO PHI PHI",
+      "name": "קו פיפי",
       "order": 5,
       "startDate": "2026-12-26",
       "endDate": "2026-12-29",
@@ -71,7 +71,7 @@
     },
     {
       "id": "phuket",
-      "name": "Phuket",
+      "name": "פוקט",
       "order": 6,
       "startDate": "2026-12-29",
       "endDate": "2027-01-03",
@@ -82,7 +82,7 @@
     },
     {
       "id": "khao-lak",
-      "name": "Khao Lak",
+      "name": "קאו לאק",
       "order": 7,
       "startDate": "2027-01-03",
       "endDate": "2027-01-06",
@@ -93,7 +93,7 @@
     },
     {
       "id": "pattaya",
-      "name": "Pattaya",
+      "name": "פאטאיה",
       "order": 8,
       "startDate": "2027-01-06",
       "endDate": "2027-01-10",
@@ -104,14 +104,14 @@
     },
     {
       "id": "bangkok",
-      "name": "Bangkok",
+      "name": "בנגקוק",
       "order": 9,
       "startDate": "2027-01-10",
       "endDate": "2027-01-14",
       "nights": 4,
       "nightsConflict": null,
       "color": "#ECECEC",
-      "whereToSleep": "Sukhumvit, Siam או Riverside"
+      "whereToSleep": "סוקומוויט, סיאם או ריברסייד"
     }
   ],
   "hotels": [

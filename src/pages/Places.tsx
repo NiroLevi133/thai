@@ -94,7 +94,7 @@ export default function Places() {
                   aria-hidden
                 />
                 <span className="min-w-0 flex-1">
-                  <span className="ltr block font-bold">{d.name}</span>
+                  <span className="block font-bold">{d.name}</span>
                   <span className="block text-xs muted">
                     {fmt(d.startDate)}–{fmt(d.endDate)} · {d.nights} לילות
                   </span>

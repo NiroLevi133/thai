@@ -90,9 +90,9 @@ function Row({ t }: { t: Transport }) {
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="ltr text-sm font-semibold">{destName(t.fromDestinationId)}</span>
+            <span className="text-sm font-semibold">{destName(t.fromDestinationId)}</span>
             <span className="muted" aria-hidden>←</span>
-            <span className="ltr text-sm font-semibold">{destName(t.toDestinationId)}</span>
+            <span className="text-sm font-semibold">{destName(t.toDestinationId)}</span>
             <span className="chip bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">{meta.label}</span>
           </div>
           <p className="mt-0.5 whitespace-pre-line text-xs muted">{t.description}</p>

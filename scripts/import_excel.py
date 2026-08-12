@@ -149,6 +149,26 @@ def slug(s):
     return re.sub(r"[^a-z0-9]+", "-", str(s).lower()).strip("-")
 
 
+# שמות היעדים באקסל המקור באנגלית — מתורגמים לעברית לתצוגה באפליקציה.
+# מפתח: השם המקורי (מנורמל ל-lower/strip). יעד שלא ברשימה נשאר בשמו המקורי.
+HEBREW_DEST_NAMES = {
+    "koh samui": "קו סמוי",
+    "ko tao": "קו טאו",
+    "koh phangan": "קו פנגן",
+    "krabi": "קרבי",
+    "ko lanta": "קו לנטה",
+    "ko phi phi": "קו פיפי",
+    "phuket": "פוקט",
+    "khao lak": "קאו לאק",
+    "pattaya": "פאטאיה",
+    "bangkok": "בנגקוק",
+}
+
+
+def hebrew_name(label):
+    return HEBREW_DEST_NAMES.get(str(label).strip().lower(), str(label).strip())
+
+
 # ---------- חילוץ מידע מהערות (עמודה J) ----------
 
 EMOJI_RE = re.compile(
@@ -471,6 +491,13 @@ def build():
         "status": "idea", "bookingRef": None, "url": None,
     })
 
+    attractions = seed_attractions(destinations)
+
+    # תרגום שמות היעדים לעברית לתצוגה — אחרי שכל ההתאמות (מלונות/אטרקציות)
+    # כבר נעשו לפי השם המקורי מהאקסל
+    for d in destinations:
+        d["name"] = hebrew_name(d["name"])
+
     trip = {
         "name": "תאילנד — ניר ואשתו",
         "startDate": iso(TRIP_START),
@@ -480,7 +507,7 @@ def build():
         "destinations": destinations,
         "hotels": hotels,
         "transport": transport,
-        "attractions": seed_attractions(destinations),
+        "attractions": attractions,
         "expenses": [],
         "settings": {
             "travelers": 2,
@@ -581,15 +608,19 @@ def verify(trip):
     print(f"  תחבורה:           {len(trip['transport'])} רשומות")
     print(f"  אטרקציות:         {len(trip['attractions'])}")
 
+    # בדיקות מבניות בלבד — לא נעולות על תמונת מצב היסטורית של הטיול, כדי
+    # שאפשר יהיה לייבא מחדש בכל פעם שהאקסל מתעדכן (הזמנות/מחירים/יעדים חדשים)
     errors = []
-    if len(dests) != 10:
-        errors.append(f"ציפינו ל-10 יעדים, התקבלו {len(dests)}")
-    if nights_planned != 36:
-        errors.append(f"ציפינו ל-36 לילות, התקבלו {nights_planned}")
-    if len(booked) != 8:
-        errors.append(f"ציפינו ל-8 מלונות סגורים, התקבלו {len(booked)}")
-    if abs(total - 14263) > 5:
-        errors.append(f"ציפינו ל-14,263 ₪, התקבל {total:,.0f}")
+    if not dests:
+        errors.append("לא נמצאו יעדים בגיליון המסלול — בדוק את שם הגיליון והמבנה")
+    if nights_planned <= 0:
+        errors.append("סה\"כ הלילות המתוכננים הוא 0 — בדוק את התאריכים בגיליון")
+    bad_dates = [d["name"] for d in dests if not d["startDate"] or not d["endDate"]]
+    if bad_dates:
+        errors.append(f"יעדים בלי תאריכים תקינים: {', '.join(bad_dates)}")
+    dup_ids = {i for i in (d["id"] for d in dests) if [x["id"] for x in dests].count(i) > 1}
+    if dup_ids:
+        errors.append(f"מזהי יעדים כפולים: {', '.join(sorted(dup_ids))}")
     return errors, open_nights
 
 

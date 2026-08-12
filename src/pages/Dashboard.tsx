@@ -132,7 +132,7 @@ export default function Dashboard() {
                 <span className="h-8 w-1.5 shrink-0 rounded-full" style={{ background: d.color }} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="ltr truncate font-semibold">{d.name}</span>
+                    <span className="truncate font-semibold">{d.name}</span>
                     {d.nightsConflict && (
                       <TriangleAlert size={13} className="shrink-0 text-amber-500" aria-label="אי-התאמה בלילות" />
                     )}

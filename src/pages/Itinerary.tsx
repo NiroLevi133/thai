@@ -60,10 +60,10 @@ function DestinationsView({ gaps }: { gaps: ReturnType<typeof gapsByDestination>
             <div className="flex items-center gap-3 border-b border-neutral-100 p-4 dark:border-neutral-800"
                  style={{ borderInlineStartWidth: 5, borderInlineStartColor: d.color, borderInlineStartStyle: 'solid' }}>
               <div className="min-w-0 flex-1">
-                <h3 className="ltr text-lg font-bold">{d.name}</h3>
+                <h3 className="text-lg font-bold">{d.name}</h3>
                 <p className="text-xs muted">
                   {fmtHe(d.startDate)} – {fmtHe(d.endDate)} · {d.nights} לילות
-                  {d.whereToSleep && <> · <span className="ltr">{d.whereToSleep}</span></>}
+                  {d.whereToSleep && <> · <span>{d.whereToSleep}</span></>}
                 </p>
                 {d.nightsConflict && (
                   <p className="mt-1 flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
@@ -189,7 +189,7 @@ function TimelineView() {
 
             <div className="min-w-0 flex-1 space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                {dest && <span className="ltr text-sm font-semibold">{dest.name}</span>}
+                {dest && <span className="text-sm font-semibold">{dest.name}</span>}
                 {isLast && (
                   <span className="chip bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300">
                     <PlaneLanding size={12} aria-hidden /> טיסה הביתה
