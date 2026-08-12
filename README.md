@@ -33,12 +33,8 @@ npm run import     # דורס את data/trip.json מהקובץ המקורי
 ⚠️ שתי הדרכים **מוחקות כל שינוי שעשית באפליקציה** (שולם, קישורים, הערות) ומחליפות אותו
 במה שכתוב באקסל. השתמש בזה רק אם אתה רוצה לרענן את הנתונים מהמקור.
 
-הייבוא רץ בפייתון (`scripts/import_excel.py`, עם openpyxl — קורא צבעים, מיזוגים ולינקים
-מהאקסל). לפני שימוש ראשון:
-
-```bash
-pip install -r scripts/requirements.txt
-```
+הייבוא רץ ב-TypeScript (`server/importExcel.ts`, עם SheetJS — קורא צבעים, מיזוגים ולינקים
+מהאקסל), אותו קוד גם בהרצה מקומית וגם בגרסה שמפורסמת ל-Vercel (`api/import-excel.ts`).
 
 ## המסכים
 
@@ -69,8 +65,10 @@ pip install -r scripts/requirements.txt
 ## מבנה
 
 ```
-scripts/import_excel.py   ייבוא חד-פעמי מהאקסל (openpyxl — קורא צבעים, מיזוגים, לינקים)
-server/index.ts           שרת נתונים: GET/PUT /api/trip
+server/importExcel.ts     פרסינג האקסל (SheetJS — קורא צבעים, מיזוגים, לינקים), משותף לשרת המקומי ול-Vercel
+scripts/import-excel.ts   עטיפת CLI ל-npm run import
+server/index.ts           שרת נתונים מקומי: GET/PUT /api/trip, POST /api/import-excel
+api/trip.ts, api/import-excel.ts   אותם endpoints בגרסת Vercel (Blob במקום דיסק)
 src/lib/gaps.ts           חישוב לילות ללא מלון
 src/lib/alerts.ts         מנוע ההתראות
 src/lib/budget.ts         חישובי תקציב ואומדנים

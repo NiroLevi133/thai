@@ -9,7 +9,7 @@
     "dev:web": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "import": "python3 scripts/import_excel.py"
+    "import": "tsx scripts/import-excel.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.6.1",

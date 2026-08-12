@@ -33,7 +33,7 @@ export default function SettingsPage() {
         body: file,
       });
       if (!res.headers.get('content-type')?.includes('application/json')) {
-        throw new Error('ייבוא מאקסל זמין רק בהרצה מקומית (npm run dev), לא בגרסה המפורסמת.');
+        throw new Error(`שגיאה לא צפויה מהשרת (${res.status})`);
       }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? res.statusText);
