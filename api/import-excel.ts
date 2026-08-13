@@ -1,5 +1,5 @@
 import { get, put } from '@vercel/blob';
-import { importExcelBuffer } from '../server/importExcel';
+import { importExcelBuffer } from '../server/importExcel.js';
 
 /**
  * מכריח ריצה ב-Node.js runtime (לא Edge). ל-xlsx (SheetJS) יש תלות ב-API של Node

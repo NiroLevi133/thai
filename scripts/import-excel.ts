@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { importExcelBuffer } from '../server/importExcel';
+import { importExcelBuffer } from '../server/importExcel.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SRC = process.env.TRIP_XLSX ?? path.join(os.homedir(), 'Downloads', 'מסלול לתאילנד מפורט ביותר!.xlsx');
