@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Map, BedDouble, Bus, Ticket, Wallet, Settings as SettingsIcon,
   Cloud, CloudOff, Loader2, Check,
@@ -46,8 +46,19 @@ function SaveIndicator() {
 
 export default function App() {
   const { trip, loading, loadError, load } = useTrip();
+  const navRef = useRef<HTMLElement>(null);
+  const location = useLocation();
 
   useEffect(() => { load(); }, [load]);
+
+  // בניווט הראשי יש גלילה אופקית במסכים צרים — בלי זה, מעבר ללשונית שגלולה
+  // מחוץ לתצוגה (כמו "תקציב"/"הגדרות") משאיר את הסימון הפעיל בלתי נראה.
+  // תלוי גם ב-loading כי בטעינה ישירה של דף לא ברירת-מחדל, ה-nav עדיין
+  // לא קיים ב-DOM באפקט הראשון (מסך טעינה) — צריך להריץ שוב כשהוא מופיע.
+  useEffect(() => {
+    navRef.current?.querySelector('[aria-current="page"]')
+      ?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [location.pathname, loading]);
 
   if (loading) {
     return (
@@ -93,7 +104,7 @@ export default function App() {
           <div className="ms-auto"><SaveIndicator /></div>
         </div>
 
-        <nav aria-label="ניווט ראשי" className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-2 pb-2">
+        <nav ref={navRef} aria-label="ניווט ראשי" className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-2 pb-2">
           {NAV.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
