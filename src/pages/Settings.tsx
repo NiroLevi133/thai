@@ -33,7 +33,9 @@ export default function SettingsPage() {
         body: file,
       });
       if (!res.headers.get('content-type')?.includes('application/json')) {
-        throw new Error(`שגיאה לא צפויה מהשרת (${res.status})`);
+        // שגיאת פלטפורמה גולמית (לא JSON שלנו) — מציגים את הטקסט הגולמי כדי שאפשר יהיה לאבחן
+        const raw = await res.text();
+        throw new Error(`שגיאה לא צפויה מהשרת (${res.status}):\n${raw.slice(0, 2000)}`);
       }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? res.statusText);
