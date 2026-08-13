@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { X, Ticket, UtensilsCrossed, ArrowRight } from 'lucide-react';
-import type { SavedLink, Destination, PlaceKind } from '../types';
+import { X, Ticket, UtensilsCrossed, ArrowRight, Link as LinkIcon, Loader2 } from 'lucide-react';
+import type { Destination, PlaceKind } from '../types';
 import { useTrip, newId } from '../store';
 import { parseAmount } from '../lib/money';
 import { nightsBetween, fmt } from '../lib/dates';
+import { normalizeUrl, detectPlatform } from '../lib/links';
 import { Field } from './ui';
-import LinkEditor from './LinkChips';
 
 const KIND_META: Record<PlaceKind, {
   label: string; blurb: string; placeholder: string; categoryLabel: string; categoryHint: string;
@@ -39,11 +39,14 @@ export default function AddPlaceDialog({
 
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
-  const [links, setLinks] = useState<SavedLink[]>([]);
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [hours, setHours] = useState('');
   const [plannedDate, setPlannedDate] = useState('');
+
+  const [linkUrl, setLinkUrl] = useState('');
+  const [scraping, setScraping] = useState(false);
+  const [linkError, setLinkError] = useState<string | null>(null);
 
   // §1 escape-routes — Esc סוגר תמיד
   useEffect(() => {
@@ -80,11 +83,55 @@ export default function AddPlaceDialog({
       durationHours: parseAmount(hours),
       plannedDate: plannedDate || null,
       status: plannedDate ? 'planned' : 'idea',
-      url: null,
-      links,
+      url: normalizeUrl(linkUrl),
       notes: notes.trim() || null,
     });
     onClose();
+  };
+
+  /** מדביקים קישור → שולפים כותרת/תיאור מהפוסט → שומרים ישר, בלי צעד ידני נוסף */
+  const fillFromLink = async () => {
+    const normalized = normalizeUrl(linkUrl);
+    if (!normalized || !kind) {
+      setLinkError('הכתובת לא תקינה — הדבק קישור מלא');
+      return;
+    }
+    setScraping(true);
+    setLinkError(null);
+    try {
+      const res = await fetch('/api/scrape-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: normalized }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? res.statusText);
+
+      const platform = detectPlatform(normalized);
+      const title: string | null = data.title || null;
+      const description: string | null = data.description || null;
+      const finalName = (title || description?.slice(0, 60) || `פוסט מ${platform.label}`).trim();
+
+      addAttraction({
+        id: newId('a'),
+        destinationId: destination.id,
+        kind,
+        name: finalName,
+        category: category.trim() || null,
+        price: parseAmount(price),
+        currency: 'ILS',
+        durationHours: parseAmount(hours),
+        plannedDate: plannedDate || null,
+        status: plannedDate ? 'planned' : 'idea',
+        url: normalized,
+        notes: description && description !== finalName ? description : notes.trim() || null,
+      });
+      onClose();
+    } catch (err) {
+      setLinkError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setScraping(false);
+    }
   };
 
   const meta = kind ? KIND_META[kind] : null;
@@ -152,6 +199,33 @@ export default function AddPlaceDialog({
         ) : (
           /* שלב 2 — פרטים */
           <div className="space-y-3">
+            <div className="rounded-2xl bg-sand-50 p-3 dark:bg-neutral-800/60">
+              <span className="label">קישור מטיקטוק / אינסטגרם / פייסבוק</span>
+              <div className="flex flex-wrap items-start gap-2">
+                <div className="min-w-[11rem] flex-1">
+                  <input
+                    className="input ltr"
+                    value={linkUrl}
+                    placeholder="הדבק קישור לפוסט…"
+                    onChange={(e) => { setLinkUrl(e.target.value); setLinkError(null); }}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); void fillFromLink(); } }}
+                    aria-label="קישור לפוסט"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => void fillFromLink()}
+                  disabled={!linkUrl.trim() || scraping}
+                  className="btn-primary shrink-0"
+                >
+                  {scraping ? <Loader2 size={14} className="animate-spin" /> : <LinkIcon size={14} />}
+                  {scraping ? 'שולף…' : 'מלא ושמור'}
+                </button>
+              </div>
+              {linkError && <p role="alert" className="mt-1 text-xs font-medium text-red-600 dark:text-red-400">{linkError}</p>}
+              <p className="mt-1 text-xs muted">שולף כותרת ותיאור מהפוסט ושומר אוטומטית. אם זה לא עובד — מלא ידנית למטה.</p>
+            </div>
+
             <Field label={`שם ה${meta!.label} *`}>
               <input className="input" value={name} autoFocus placeholder={meta!.placeholder}
                      onChange={(e) => setName(e.target.value)} />
@@ -178,11 +252,6 @@ export default function AddPlaceDialog({
                   {days.map((d) => <option key={d} value={d}>{fmt(d)}</option>)}
                 </select>
               </Field>
-            </div>
-
-            <div>
-              <span className="label">קישורים שמורים (טיקטוק, אינסטגרם, מפות…)</span>
-              <LinkEditor links={links} onChange={setLinks} />
             </div>
 
             <Field label="הערה">

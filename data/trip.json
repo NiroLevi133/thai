@@ -135,8 +135,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.hansarsamui.com/",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "h-haadtien-beach-resort",
@@ -158,8 +157,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.agoda.com/haadtien-beach-resort/hotel/koh-tao-th.html",
-      "notes": "חלק ראשון בקו טאו",
-      "links": []
+      "notes": "חלק ראשון בקו טאו"
     },
     {
       "id": "h-sairee-hut-resort",
@@ -181,8 +179,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.expedia.com/Koh-Tao-Hotels-Sairee-Hut-Resort-Koh-Tao.h4519591.Hotel-Information",
-      "notes": "חלק שני בקו טאו",
-      "links": []
+      "notes": "חלק שני בקו טאו"
     },
     {
       "id": "h-explorar-koh-phangan-adults-only",
@@ -204,8 +201,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.trip.com/hotels/koh-phangan-hotel-detail-1405275/the-coast-resort-koh-phangan/",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "h-panan-krabi-resort",
@@ -227,8 +223,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://panankrabiresort.com/",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "h-twin-lotus-resort-spa",
@@ -250,8 +245,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.agoda.com/twin-lotus-resort-and-spa-adult-only/hotel/koh-lanta-th.html",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "h-grace-patong-hotel",
@@ -273,8 +267,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://uk.trip.com/hotels/phuket-hotel-detail-86134791/grace-patong-hotel/",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "h-pathumwan-princess-hotel",
@@ -296,8 +289,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.pprincess.com/",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-samui-la-vida-samui",
@@ -319,8 +311,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-zzeg3o",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-samui-nantra-chaweng-beach",
@@ -342,8 +333,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-pf7P2b",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-samui-chaweng-regent-beach-resort",
@@ -365,8 +355,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-toeolJ",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-samui-sareeraya-villas-suites",
@@ -388,8 +377,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Y0wvrf",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-samui-centara-reserve-samui",
@@ -411,8 +399,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://be.synxis.com/addons?_gl=1*3vnts*_ga*NjA3NjYyMDczLjE3ODI4MzAxMjk.*_ga_8T7Y326GMM*czE3ODI4MzAxMjkkbzEkZzAkdDE3ODI4MzAxMjkkajYwJGwwJGgxMjM2OTg2NjA4*_ga_DMP570DVFB*czE3ODI4MzAxMzAkbzEkZzAkdDE3ODI4MzAxMzAkajYwJGwwJGgxNzQwMjAzOTM0&adult=2&agencyid=CENTARA&arrive=2026-11-09&brand=8&chain=27886&child=0&currency=ILS&depart=2026-11-13&filter=ALL&hotel=34985&level=hotel&locale=en-US&productcurrency=THB&rooms=1&sbe_rc=NTcxMGU0YjQtY2E1OS00M2IyLWFiZGYtYTdmMDY2MzA4NGI1&theme=CentaraReserve&themecode=CentaraReserve",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-samui-anantara-lawana-koh-samui-resort",
@@ -434,8 +421,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-TvC5cp1",
-      "notes": "או 5343",
-      "links": []
+      "notes": "או 5343"
     },
     {
       "id": "c-koh-samui-bandara-spa-resort-pool-villas-samui",
@@ -457,8 +443,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.agoda.com/he-il/bandara-resort-spa/hotel/koh-samui-th.html?countryId=106&finalPriceView=2&isShowMobileAppPrice=false&cid=1922880&numberOfBedrooms=&familyMode=false&adults=2&children=0&rooms=1&maxRooms=0&checkIn=2026-12-9&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=1&showReviewSubmissionEntry=false&currencyCode=ILS&isFreeOccSearch=false&tag=3cd086f3-ad87-403f-be82-5b21aaadd4d8&los=4&searchrequestid=8f7b095f-60aa-4a00-af86-ca6aa0733a53&ds=T63R23GuPK8axpF%2B",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-tao-koh-tao-heights-pool-villas",
@@ -480,8 +465,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-0XaZM3",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-tao-koh-tao-cabana",
@@ -503,8 +487,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/hotel/th/koh-tao-cabana.he.html",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-tao-phandara-luxury-pool-villas",
@@ -526,8 +509,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-hgKtOw",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-tao-sai-daeng-resort",
@@ -549,8 +531,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Oo8jyO",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-tao-the-tarna-resort-koh-tao",
@@ -572,8 +553,7 @@
       "paid": false,
       "paidAmount": null,
       "url": null,
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-phangan-explorer",
@@ -595,8 +575,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.agoda.com/he-il/explorar-koh-phangan-adult-only-resort-and-spa-h407704/hotel/ko-pha-ngan-th.html?countryId=106&finalPriceView=2&isShowMobileAppPrice=false&cid=1922880&numberOfBedrooms=&familyMode=false&adults=2&children=0&rooms=1&maxRooms=0&checkIn=2026-12-17&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=1&showReviewSubmissionEntry=false&currencyCode=ILS&isFreeOccSearch=false&tag=3cd086f3-ad87-403f-be82-5b21aaadd4d8&tspTypes=9&los=2&searchrequestid=8b141d84-31c4-4ed3-afc7-66d840fe7dc3&ds=T63R23GuPK8axpF%2B",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-koh-phangan-vannee-golden-sands-beachfront-resort",
@@ -618,8 +597,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/hotel/th/vannee-golden-sands.he.html",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-krabi-hotel-adam-krabi",
@@ -641,8 +619,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-JBzCcEg",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-krabi-avani-ao-nang-cliff-krabi-resort",
@@ -664,8 +641,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/searchresults.he.html?ss=Avani%20Ao%20Nang%20Cliff%20Krabi%20Resort",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-krabi-centara-ao-nang-beach-resort-spa-krabi",
@@ -687,8 +663,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/searchresults.he.html?ss=Centara%20Ao%20Nang%20Beach%20Resort%20%26%20Spa%20Krabi",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-krabi-krabi-tipa-resort",
@@ -710,8 +685,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-k8XYOzv",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-krabi-red-ginger-chic-resort",
@@ -733,8 +707,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-2OZnyJ3",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-krabi-dusit-thani-krabi-beach-resort",
@@ -756,8 +729,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/searchresults.he.html?ss=Dusit%20Thani%20Krabi%20Beach%20Resort",
-      "notes": "ל 2 לילות",
-      "links": []
+      "notes": "ל 2 לילות"
     },
     {
       "id": "c-krabi-the-shellsea-krabi",
@@ -779,8 +751,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-3IpFqo",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-lanta-twin-bay-resort-koh-lanta",
@@ -802,8 +773,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-f9lImb",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-lanta-costa-lanta-adult-only",
@@ -825,8 +795,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-1ALzK0",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-lanta-lanta-sand-resort-spa",
@@ -848,8 +817,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-QbtLo1",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-ko-lanta-nakara-long-beach-resort-sha-extra-plus",
@@ -871,8 +839,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-q1Rutt",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-phuket-best-western-patong-beach",
@@ -894,8 +861,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Un6wze",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-phuket-crest-resort-pool-villas",
@@ -917,8 +883,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-zacpUN",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-phuket-cape-sienna-phuket-gourmet-hotel-villas-sha-extra-plus",
@@ -940,8 +905,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/hotel/th/cape-sienna-villas.he.html?aid=1809728&label=20574&sid=5587f34805b4b4b850aedd4fa1cce1ff&all_sr_blocks=4711701_0_2_1_0&checkin=2027-01-01&checkout=2027-01-03&dest_id=47117&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=4711701_0_2_1_0&hpos=1&matching_block_id=4711701_0_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=4711701_0_2_1_0__2520658&srepoch=1782939819&srpvid=d7c1941336fd050a&type=total&ucfs=1&",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-phuket-pullman-phuket-panwa-beach-resort",
@@ -963,8 +927,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Lb99I9T",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-khao-lak-the-waters-khao-lak-by-katathani-sha-extra-plus",
@@ -986,8 +949,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Ui2t3qx",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-khao-lak-khaolak-oriental-resort-adult-only",
@@ -1009,8 +971,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-reDi3z",
-      "notes": "בלי החזר",
-      "links": []
+      "notes": "בלי החזר"
     },
     {
       "id": "c-khao-lak-kalima-resort-and-villas-khao-lak",
@@ -1032,8 +993,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Zv216P",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-khao-lak-pullman-khao-lak-resort",
@@ -1055,8 +1015,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-Mzbi7g",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-khao-lak-grand-mercure-khao-lak-bangsak",
@@ -1078,8 +1037,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-zwG5TD",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-khao-lak-ramada-resort-by-wyndham-khao-lak",
@@ -1101,8 +1059,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-67AlSM",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-khao-lak-moracea-by-khao-lak-resort",
@@ -1124,8 +1081,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.agoda.com/he-il/moracea-by-khao-lak-resort-sha-extra-plus_4/hotel/all/khao-lak-th.html?countryId=106&finalPriceView=2&isShowMobileAppPrice=false&cid=1922861&numberOfBedrooms=&familyMode=false&adults=2&children=0&rooms=1&maxRooms=0&checkIn=2027-01-3&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=1&showReviewSubmissionEntry=false&currencyCode=ILS&isFreeOccSearch=false&tag=cccfc768-57b8-4e4d-9a5a-30f880ffa456&tspTypes=-1&los=3&searchrequestid=e073a64b-f2e9-41c7-8695-2a675de2fe4b&ds=Ocaz%2FHzxOuKSMTeh",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-pattaya-",
@@ -1147,8 +1103,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-ly4zFRI",
-      "notes": "שם חסר באקסל — לעדכן מהלינק",
-      "links": []
+      "notes": "שם חסר באקסל — לעדכן מהלינק"
     },
     {
       "id": "c-pattaya--2",
@@ -1170,8 +1125,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-dckH5Sp",
-      "notes": "שם חסר באקסל — לעדכן מהלינק",
-      "links": []
+      "notes": "שם חסר באקסל — לעדכן מהלינק"
     },
     {
       "id": "c-bangkok-carlton-hotel-bangkok-sukhumvit",
@@ -1193,8 +1147,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-zcxUzv",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-bangkok-grande-centre-point-hotel-ratchadamri-bangkok",
@@ -1216,8 +1169,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-0os1P4",
-      "notes": null,
-      "links": []
+      "notes": null
     },
     {
       "id": "c-bangkok-",
@@ -1239,8 +1191,7 @@
       "paid": false,
       "paidAmount": null,
       "url": "https://www.booking.com/Share-7Lhhtc",
-      "notes": null,
-      "links": []
+      "notes": null
     }
   ],
   "transport": [
@@ -1399,353 +1350,7 @@
       "url": null
     }
   ],
-  "attractions": [
-    {
-      "id": "a-koh-samui-ang-thong-marine-park",
-      "destinationId": "koh-samui",
-      "name": "Ang Thong Marine Park — שיט יומי",
-      "category": "טבע",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 6,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-koh-samui-big-buddha-fisherman-s-village",
-      "destinationId": "koh-samui",
-      "name": "Big Buddha & Fisherman's Village",
-      "category": "תרבות",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 3,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-ko-tao-",
-      "destinationId": "ko-tao",
-      "name": "קורס/צלילת היכרות",
-      "category": "ספורט ימי",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 4,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-ko-tao-nang-yuan-viewpoint",
-      "destinationId": "ko-tao",
-      "name": "Nang Yuan Viewpoint",
-      "category": "טבע",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 3,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-koh-phangan-bottle-beach-thong-nai-pan",
-      "destinationId": "koh-phangan",
-      "name": "Bottle Beach + Thong Nai Pan",
-      "category": "חופים",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 5,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-koh-phangan-phaeng-waterfall-viewpoint",
-      "destinationId": "koh-phangan",
-      "name": "Phaeng Waterfall Viewpoint",
-      "category": "טבע",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 3,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-krabi-railay-beach-phra-nang-cave",
-      "destinationId": "krabi",
-      "name": "Railay Beach + Phra Nang Cave",
-      "category": "חופים",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 6,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-krabi-four-islands-tour",
-      "destinationId": "krabi",
-      "name": "Four Islands Tour",
-      "category": "שיט",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 7,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-krabi-emerald-pool-hot-springs",
-      "destinationId": "krabi",
-      "name": "Emerald Pool & Hot Springs",
-      "category": "טבע",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 5,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-ko-lanta-old-town",
-      "destinationId": "ko-lanta",
-      "name": "Old Town + חופי המערב",
-      "category": "סיור",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 4,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-ko-lanta-koh-rok-koh-haa",
-      "destinationId": "ko-lanta",
-      "name": "Koh Rok / Koh Haa — שנרקול",
-      "category": "שיט",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 8,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-ko-phi-phi-maya-bay-pileh-lagoon",
-      "destinationId": "ko-phi-phi",
-      "name": "Maya Bay + Pileh Lagoon",
-      "category": "שיט",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 6,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-ko-phi-phi-phi-phi-viewpoint",
-      "destinationId": "ko-phi-phi",
-      "name": "Phi Phi Viewpoint",
-      "category": "טבע",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 2.5,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-phuket-old-town",
-      "destinationId": "phuket",
-      "name": "Old Town פוקט",
-      "category": "תרבות",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 3,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-phuket-phang-nga-bay-james-bond-island",
-      "destinationId": "phuket",
-      "name": "Phang Nga Bay / James Bond Island",
-      "category": "שיט",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 8,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-phuket-promthep-cape",
-      "destinationId": "phuket",
-      "name": "Promthep Cape — שקיעה",
-      "category": "נוף",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 2,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-khao-lak-similan-islands",
-      "destinationId": "khao-lak",
-      "name": "Similan Islands — יום שנרקול/צלילה",
-      "category": "שיט",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 9,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-khao-lak-khao-sok-national-park",
-      "destinationId": "khao-lak",
-      "name": "Khao Sok National Park",
-      "category": "טבע",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 10,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-pattaya-sanctuary-of-truth",
-      "destinationId": "pattaya",
-      "name": "Sanctuary of Truth",
-      "category": "תרבות",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 2.5,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-pattaya-koh-larn",
-      "destinationId": "pattaya",
-      "name": "Koh Larn — אי סמוך",
-      "category": "חופים",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 6,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-bangkok-grand-palace-wat-pho",
-      "destinationId": "bangkok",
-      "name": "Grand Palace + Wat Pho",
-      "category": "תרבות",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 4,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-bangkok-chatuchak-weekend-market",
-      "destinationId": "bangkok",
-      "name": "Chatuchak Weekend Market",
-      "category": "שופינג",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 4,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    },
-    {
-      "id": "a-bangkok-",
-      "destinationId": "bangkok",
-      "name": "שוק לילה + רופטופ בר",
-      "category": "בילוי",
-      "price": null,
-      "currency": "ILS",
-      "durationHours": 4,
-      "plannedDate": null,
-      "status": "idea",
-      "url": null,
-      "notes": null,
-      "links": [],
-      "kind": "attraction"
-    }
-  ],
+  "attractions": [],
   "expenses": [],
   "settings": {
     "travelers": 2,

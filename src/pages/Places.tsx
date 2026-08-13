@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  Plus, Trash2, Clock, ChevronDown, Ticket, UtensilsCrossed, Pencil,
+  Plus, Trash2, Clock, ChevronDown, Ticket, UtensilsCrossed, Pencil, Link as LinkIcon,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTrip } from '../store';
@@ -10,7 +10,6 @@ import { ils, parseAmount } from '../lib/money';
 import { SectionTitle, Field } from '../components/ui';
 import { EmptyFun } from '../components/Encourage';
 import AddPlaceDialog from '../components/AddPlaceDialog';
-import LinkEditor, { LinkChipList } from '../components/LinkChips';
 
 const STATUS_META: Record<Attraction['status'], { label: string; cls: string }> = {
   idea: { label: 'רעיון', cls: 'bg-sand-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300' },
@@ -65,7 +64,7 @@ export default function Places() {
           </button>
         }
       >
-        מקומות · {counts('attraction')} אטרקציות · {counts('restaurant')} מסעדות
+        לו״ז · {counts('attraction')} אטרקציות · {counts('restaurant')} מסעדות
       </SectionTitle>
 
       {destinations.map((d) => {
@@ -210,7 +209,11 @@ function PlaceRow({ a, days }: { a: Attraction; days: string[] }) {
       )}
 
       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-        <LinkChipList links={a.links} />
+        {a.url && (
+          <a href={a.url} target="_blank" rel="noreferrer" className="chip bg-sand-100 dark:bg-neutral-800">
+            <LinkIcon size={11} aria-hidden /> הקישור המקורי
+          </a>
+        )}
         <select
           className="input !w-auto !py-0.5 text-xs"
           value={a.plannedDate ?? ''}
@@ -267,10 +270,12 @@ function PlaceRow({ a, days }: { a: Attraction; days: string[] }) {
                        onChange={(e) => updateAttraction(a.id, { notes: e.target.value || null })} />
               </Field>
             </div>
-          </div>
-          <div>
-            <span className="label">קישורים שמורים</span>
-            <LinkEditor links={a.links ?? []} onChange={(links) => updateAttraction(a.id, { links })} />
+            <div className="sm:col-span-2">
+              <Field label="קישור">
+                <input className="input ltr" value={a.url ?? ''} placeholder="https://…"
+                       onChange={(e) => updateAttraction(a.id, { url: e.target.value || null })} />
+              </Field>
+            </div>
           </div>
           <div className="flex justify-end">
             <button onClick={() => confirm(`למחוק את ${a.name}?`) && removeAttraction(a.id)}

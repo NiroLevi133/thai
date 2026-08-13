@@ -1,12 +1,13 @@
 /**
  * ייבוא מקובץ האקסל אל אובייקט Trip.
  * מקור: גיליון יחיד "מלונות שהוזמנו" עם כל המידע על כל מלון — אין יותר גיליון מסלול
- * נפרד ואין יותר זיהוי לפי צבעי תא. עמודות (A→N):
- *   יעד, שם מלון, סוג חדר, צ׳ק-אין, צ׳ק-אאוט, מספר לילות, מחיר ללילה, מחיר כולל,
- *   דרך מי הוזמן, מספר הזמנה, ביטול חינם עד, סטטוס ההזמנה, הערות, קישור (היפרלינק)
+ * נפרד ואין יותר זיהוי לפי צבעי תא. עמודות (A→O):
+ *   יעד, מלון, כוכבים, סוג חדר, צ׳ק-אין, צ׳ק-אאוט, מס׳ לילות, מחיר ללילה, מחיר כולל,
+ *   הוזמן דרך, מספר הזמנה, ביטול חינם עד, סטטוס, הערה, קישור למלון (היפרלינק)
  *
  * היעדים (המסלול) נגזרים מתוך עמודת "יעד" + טווח התאריכים של המלונות שמשויכים אליה —
- * אין יותר גיליון מסלול נפרד עם סדר/צבע/לילות/מעברי תחבורה.
+ * אין יותר גיליון מסלול נפרד עם סדר/צבע/לילות/מעברי תחבורה. הלו"ז (אטרקציות/מסעדות)
+ * מתחיל ריק בכל ייבוא — המשתמש מוסיף בעצמו, כולל אוטומטית מקישורים ברשתות חברתיות.
  */
 // ייבוא מהקובץ הישיר של ה-ESM build (לא 'xlsx' עצמו) — ראה server/xlsx-mjs.d.ts להסבר
 import * as XLSX from 'xlsx/xlsx.mjs';
@@ -280,7 +281,6 @@ function buildTrip(wb: XLSX.WorkBook): Trip {
     paid: r.paid,
     paidAmount: r.paid ? r.totalPrice : null,
     url: r.url,
-    links: [],
     notes: r.notes,
   }));
 
@@ -320,8 +320,6 @@ function buildTrip(wb: XLSX.WorkBook): Trip {
     },
   ];
 
-  const attractions = seedAttractions(destinations, rows.map((r) => r.destination));
-
   return {
     name: 'תאילנד — ניר ואשתו',
     startDate: tripStart ?? '',
@@ -331,7 +329,8 @@ function buildTrip(wb: XLSX.WorkBook): Trip {
     destinations,
     hotels,
     transport,
-    attractions,
+    // הלו"ז מתחיל ריק — המשתמש מוסיף בעצמו מקומות (כולל אוטומטית מקישורים ברשתות חברתיות)
+    attractions: [],
     expenses: [],
     settings: {
       travelers: 2,
@@ -341,63 +340,6 @@ function buildTrip(wb: XLSX.WorkBook): Trip {
       theme: 'light',
     },
   };
-}
-
-// ---------- אטרקציות זרע (מינימלי: 2-3 ליעד, לפי השם המקורי מהאקסל) ----------
-
-const SEED: Record<string, [string, string, number][]> = {
-  'koh samui': [["Ang Thong Marine Park — שיט יומי", 'טבע', 6.0],
-    ["Big Buddha & Fisherman's Village", 'תרבות', 3.0]],
-  'ko tao': [['קורס/צלילת היכרות', 'ספורט ימי', 4.0],
-    ['Nang Yuan Viewpoint', 'טבע', 3.0]],
-  'koh phangan': [['Bottle Beach + Thong Nai Pan', 'חופים', 5.0],
-    ['Phaeng Waterfall Viewpoint', 'טבע', 3.0]],
-  'krabi': [['Railay Beach + Phra Nang Cave', 'חופים', 6.0],
-    ['Four Islands Tour', 'שיט', 7.0],
-    ['Emerald Pool & Hot Springs', 'טבע', 5.0]],
-  'ko lanta': [['Old Town + חופי המערב', 'סיור', 4.0],
-    ['Koh Rok / Koh Haa — שנרקול', 'שיט', 8.0]],
-  'ko phi phi': [['Maya Bay + Pileh Lagoon', 'שיט', 6.0],
-    ['Phi Phi Viewpoint', 'טבע', 2.5]],
-  'phuket': [['Old Town פוקט', 'תרבות', 3.0],
-    ['Phang Nga Bay / James Bond Island', 'שיט', 8.0],
-    ['Promthep Cape — שקיעה', 'נוף', 2.0]],
-  'khao lak': [['Similan Islands — יום שנרקול/צלילה', 'שיט', 9.0],
-    ['Khao Sok National Park', 'טבע', 10.0]],
-  'pattaya': [['Sanctuary of Truth', 'תרבות', 2.5],
-    ['Koh Larn — אי סמוך', 'חופים', 6.0]],
-  'bangkok': [['Grand Palace + Wat Pho', 'תרבות', 4.0],
-    ['Chatuchak Weekend Market', 'שופינג', 4.0],
-    ['שוק לילה + רופטופ בר', 'בילוי', 4.0]],
-};
-
-function seedAttractions(destinations: Destination[], originalLabels: string[]) {
-  // צריך את השם המקורי (לפני תרגום לעברית) כדי להתאים ל-SEED — בונים מיפוי id→שם מקורי
-  const labelById = new Map<string, string>();
-  for (const label of originalLabels) labelById.set(slug(label), label);
-
-  const out = [];
-  for (const d of destinations) {
-    const originalLabel = labelById.get(d.id) ?? d.name;
-    for (const [name, category, hours] of SEED[originalLabel.trim().toLowerCase()] ?? []) {
-      out.push({
-        id: `a-${d.id}-${slug(name)}`.slice(0, 80),
-        destinationId: d.id,
-        kind: 'attraction' as const,
-        name,
-        category,
-        price: null,
-        currency: 'ILS' as const,
-        durationHours: hours,
-        plannedDate: null,
-        status: 'idea' as const,
-        url: null,
-        links: [],
-        notes: null,
-      });
-    }
-  }
-  return out;
 }
 
 // ---------- אימות ----------

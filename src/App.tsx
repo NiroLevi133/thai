@@ -19,7 +19,7 @@ const NAV = [
   { to: '/itinerary', label: 'מסלול', icon: Map },
   { to: '/hotels', label: 'מלונות', icon: BedDouble },
   { to: '/transport', label: 'תחבורה', icon: Bus },
-  { to: '/places', label: 'מקומות', icon: Ticket },
+  { to: '/places', label: 'לו״ז', icon: Ticket },
   { to: '/budget', label: 'תקציב', icon: Wallet },
   { to: '/settings', label: 'הגדרות', icon: SettingsIcon },
 ];

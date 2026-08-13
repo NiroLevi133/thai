@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { importExcelBuffer } from './importExcel.js';
+import { scrapeLink } from './scrapeLink.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA = path.join(__dirname, '..', 'data', 'trip.json');
@@ -57,6 +58,18 @@ app.post('/api/import-excel', express.raw({ type: '*/*', limit: '25mb' }), (req,
     res.json({ ok: true, trip: result.trip, log: result.log.join('\n') });
   } catch (err) {
     res.status(500).json({ error: String(err) });
+  }
+});
+
+/** שליפת כותרת/תיאור/תמונה מקישור (טיקטוק/אינסטגרם/פייסבוק) למילוי אוטומטי בלו"ז */
+app.post('/api/scrape-link', async (req, res) => {
+  const url = typeof req.body?.url === 'string' ? req.body.url : null;
+  if (!url) return res.status(400).json({ error: 'לא התקבל קישור' });
+  try {
+    const result = await scrapeLink(url);
+    res.json(result);
+  } catch (err) {
+    res.status(502).json({ error: `לא הצלחתי לשלוף מידע מהקישור: ${String(err instanceof Error ? err.message : err)}` });
   }
 });
 

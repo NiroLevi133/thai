@@ -87,12 +87,11 @@ export const useTrip = create<TripStore>((set, get) => {
         const res = await fetch('/api/trip');
         if (!res.ok) throw new Error((await res.json()).error ?? res.statusText);
         const raw = await res.json();
-        // רשומות שנוצרו לפני שהוספנו קישורים שמורים מגיעות בלי השדה
+        // רשומות שנוצרו לפני שהוספנו kind מגיעות בלי השדה
         const trip: Trip = {
           ...raw,
-          hotels: (raw.hotels ?? []).map((h: Hotel) => ({ ...h, links: h.links ?? [] })),
           attractions: (raw.attractions ?? []).map((a: Attraction) => ({
-            ...a, links: a.links ?? [], kind: a.kind ?? 'attraction',
+            ...a, kind: a.kind ?? 'attraction',
           })),
         };
         set({ trip, loading: false });

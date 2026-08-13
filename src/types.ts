@@ -1,12 +1,5 @@
 export type HotelStatus = 'booked' | 'candidate' | 'rejected';
 
-/** קישור שמור — טיקטוק/אינסטגרם/פייסבוק/מפות או כל מקור אחר */
-export interface SavedLink {
-  id: string;
-  url: string;
-  /** כותרת חופשית, למשל "הסרטון של דנה" */
-  label: string | null;
-}
 export type Currency = 'ILS' | 'THB';
 
 export interface Destination {
@@ -42,9 +35,8 @@ export interface Hotel {
   freeCancelConflict: string | null;
   paid: boolean;
   paidAmount: number | null;
+  /** קישור לאתר המלון או לדף ההזמנה */
   url: string | null;
-  /** קישורים שמורים מרשתות חברתיות ומקורות אחרים */
-  links: SavedLink[];
   notes: string | null;
 }
 
@@ -66,7 +58,7 @@ export interface Transport {
   url: string | null;
 }
 
-/** מקום בעמוד "מקומות" — אטרקציה או מסעדה (מלונות מנוהלים בנפרד) */
+/** פריט בלו״ז — אטרקציה או מסעדה (מלונות מנוהלים בנפרד) */
 export type PlaceKind = 'attraction' | 'restaurant';
 
 export interface Attraction {
@@ -80,9 +72,8 @@ export interface Attraction {
   durationHours: number | null;
   plannedDate: string | null;
   status: 'idea' | 'planned' | 'booked' | 'done';
+  /** קישור המקור — לרוב פוסט מטיקטוק/אינסטגרם/פייסבוק שממנו נשלף המידע */
   url: string | null;
-  /** קישורים שמורים מרשתות חברתיות ומקורות אחרים */
-  links: SavedLink[];
   notes: string | null;
 }
 

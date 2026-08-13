@@ -10,7 +10,6 @@ import { fmt, daysUntil } from '../lib/dates';
 import { ils, parseAmount } from '../lib/money';
 import { SectionTitle, Stars, Field } from '../components/ui';
 import { EmptyFun } from '../components/Encourage';
-import LinkEditor, { LinkChipList } from '../components/LinkChips';
 
 type Tab = HotelStatus;
 
@@ -197,13 +196,11 @@ function HotelRow({ hotel: h, destStart, destEnd }: { hotel: Hotel; destStart: s
             </div>
           )}
           {h.notes && <p className="text-xs muted">{h.notes}</p>}
-          {h.links?.length > 0 && <LinkChipList links={h.links} />}
 
           <div className="flex flex-wrap items-center gap-1.5">
             {h.url && (
-              <a href={h.url} target="_blank" rel="noreferrer" className="btn-icon"
-                 aria-label={`פתח את דף ההזמנה של ${h.name}`}>
-                <ExternalLink size={14} />
+              <a href={h.url} target="_blank" rel="noreferrer" className="btn-ghost !px-2.5 !py-1.5 text-xs">
+                <ExternalLink size={13} /> אתר המלון
               </a>
             )}
             {h.status === 'booked' ? (
@@ -262,7 +259,7 @@ function HotelRow({ hotel: h, destStart, destEnd }: { hotel: Hotel; destStart: s
             <input className="input ltr" value={h.confirmationNumber ?? ''}
                    onChange={(e) => updateHotel(h.id, { confirmationNumber: e.target.value || null })} />
           </Field>
-          <Field label="קישור">
+          <Field label="קישור לאתר המלון">
             <input className="input ltr" value={h.url ?? ''} placeholder="https://…"
                    onChange={(e) => updateHotel(h.id, { url: e.target.value || null })} />
           </Field>
@@ -270,11 +267,6 @@ function HotelRow({ hotel: h, destStart, destEnd }: { hotel: Hotel; destStart: s
             <input className="input" value={h.notes ?? ''}
                    onChange={(e) => updateHotel(h.id, { notes: e.target.value || null })} />
           </Field>
-
-          <div className="sm:col-span-2 lg:col-span-4">
-            <span className="label">קישורים שמורים (טיקטוק, אינסטגרם, מפות…)</span>
-            <LinkEditor links={h.links ?? []} onChange={(links) => updateHotel(h.id, { links })} />
-          </div>
 
           {h.freeCancelConflict && (
             <div className="sm:col-span-2 lg:col-span-4 rounded-lg bg-amber-50 p-2.5 text-xs text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
@@ -330,7 +322,6 @@ function NewHotelForm({
       paid: false,
       paidAmount: null,
       url: url.trim() || null,
-      links: [],
       notes: null,
     });
     onDone();
