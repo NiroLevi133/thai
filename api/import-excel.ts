@@ -1,6 +1,13 @@
 import { get, put } from '@vercel/blob';
 import { importExcelBuffer } from '../server/importExcel';
 
+/**
+ * מכריח ריצה ב-Node.js runtime (לא Edge). ל-xlsx (SheetJS) יש תלות ב-API של Node
+ * (Buffer/zlib וכו') שלא קיים ב-Edge — בלי זה הפונקציה קורסת בטעינה, לפני שהקוד
+ * שלנו בכלל רץ, ומחזירה שגיאת פלטפורמה גולמית (לא JSON) במקום השגיאה המפורטת שלנו.
+ */
+export const config = { runtime: 'nodejs' };
+
 /** מקביל ל-api/trip.ts — Blob הוא מקור האמת בפרודקשן, אין דיסק לכתוב אליו. */
 const PATH = 'trip.json';
 const ACCESS = 'private' as const;
