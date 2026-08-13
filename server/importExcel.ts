@@ -8,7 +8,8 @@
  * היעדים (המסלול) נגזרים מתוך עמודת "יעד" + טווח התאריכים של המלונות שמשויכים אליה —
  * אין יותר גיליון מסלול נפרד עם סדר/צבע/לילות/מעברי תחבורה.
  */
-import * as XLSX from 'xlsx';
+// ייבוא מהקובץ הישיר של ה-ESM build (לא 'xlsx' עצמו) — ראה server/xlsx-mjs.d.ts להסבר
+import * as XLSX from 'xlsx/xlsx.mjs';
 import type { Trip, Destination, Hotel, Transport, HotelStatus } from '../src/types';
 
 const SHEET_HOTELS = 'מלונות שהוזמנו';
