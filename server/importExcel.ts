@@ -72,6 +72,15 @@ function parseMoney(v: unknown): [number | null, string | null] {
   return [num, leftover || null];
 }
 
+/** '★★★★½' → 4.5 */
+function parseStars(v: unknown): number | null {
+  if (!v) return null;
+  const s = String(v);
+  const n = (s.match(/★/g)?.length ?? 0) + (s.match(/⭐/g)?.length ?? 0);
+  if (!n) return null;
+  return s.includes('½') ? n + 0.5 : n;
+}
+
 function slug(s: string): string {
   const ascii = String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   if (ascii) return ascii;
@@ -92,6 +101,7 @@ const HEBREW_DEST_NAMES: Record<string, string> = {
   'khao lak': 'קאו לאק',
   'pattaya': 'פאטאיה',
   'bangkok': 'בנגקוק',
+  'koh phi phi': 'קו פיפי',
 };
 function hebrewName(label: string): string {
   return HEBREW_DEST_NAMES[label.trim().toLowerCase()] ?? label.trim();
@@ -107,7 +117,7 @@ function classifyStatus(raw: unknown): { status: HotelStatus; paid: boolean; unr
   if (has(['בוטל', 'מבוטל', 'נפסל', 'ירד', 'לא רלוונטי', 'נדחה', 'דחוי'])) {
     return { status: 'rejected', paid: false, unrecognized: null };
   }
-  if (has(['שולם', 'סגור', 'נסגר', 'הוזמן', 'מאושר', 'בוצע', 'אושר', 'confirmed', 'paid', 'booked'])) {
+  if (has(['שולם', 'סגור', 'נסגר', 'הוזמן', 'מאושר', 'בוצע', 'אושר', 'שוריין', 'confirmed', 'paid', 'booked'])) {
     return { status: 'booked', paid: has(['שולם', 'paid']), unrecognized: null };
   }
   if (has(['מועמד', 'אולי', 'לבדוק', 'בבדיקה', 'פתוח', 'אפשרות', 'בהמתנה', 'candidate'])) {
@@ -134,7 +144,7 @@ function maxRow(ws: XLSX.WorkSheet): number {
 // ---------- קריאת גיליון המלונות ----------
 
 interface HotelRow {
-  destination: string; name: string; roomType: string | null;
+  destination: string; name: string; stars: number | null; roomType: string | null;
   checkIn: string | null; checkOut: string | null; nights: number | null;
   pricePerNight: number | null; totalPrice: number | null;
   bookedVia: string | null; confirmationNumber: string | null;
@@ -142,43 +152,50 @@ interface HotelRow {
   notes: string | null; url: string | null;
 }
 
+/** עמודות (A→O): יעד, מלון, כוכבים, סוג חדר, צ׳ק-אין, צ׳ק-אאוט, לילות, מחיר ללילה,
+ *  מחיר כולל, הוזמן דרך, מספר הזמנה, ביטול חינם עד, סטטוס, הערה, קישור למלון */
 function readHotels(ws: XLSX.WorkSheet): HotelRow[] {
   const rows: HotelRow[] = [];
   for (let r = 1; r <= maxRow(ws); r++) {
     const destRaw = cellValue(ws, r, 1);
     const nameRaw = cellValue(ws, r, 2);
     if (!destRaw || !nameRaw) continue;
-    const name = String(nameRaw).trim();
-    if (name === 'שם מלון' || name === 'שם המלון') continue; // שורת כותרת
+    if (String(destRaw).trim() === 'יעד') continue; // שורת כותרת
 
-    const [pricePerNight, priceNote] = parseMoney(cellValue(ws, r, 7));
-    const [totalPrice, totalNote] = parseMoney(cellValue(ws, r, 8));
-    const nightsRaw = cellValue(ws, r, 6);
-    const roomTypeRaw = cellValue(ws, r, 3);
-    const bookedViaRaw = cellValue(ws, r, 9);
-    const confRaw = cellValue(ws, r, 10);
-    const { status, paid, unrecognized } = classifyStatus(cellValue(ws, r, 12));
-    const linkCell = cellAt(ws, r, 14);
+    const checkIn = isoDate(parseFullDate(cellValue(ws, r, 5)));
+    const checkOut = isoDate(parseFullDate(cellValue(ws, r, 6)));
+    const nightsRaw = cellValue(ws, r, 7);
+    const [pricePerNight, priceNote] = parseMoney(cellValue(ws, r, 8));
+    const [totalPrice, totalNote] = parseMoney(cellValue(ws, r, 9));
+    // שורת כותרת/סיכום שלא נתפסה למעלה — אין בה תאריך, מחיר או מספר לילות תקין בכלל
+    if (!checkIn && !checkOut && totalPrice == null && typeof nightsRaw !== 'number') continue;
+
+    const roomTypeRaw = cellValue(ws, r, 4);
+    const bookedViaRaw = cellValue(ws, r, 10);
+    const confRaw = cellValue(ws, r, 11);
+    const { status, paid, unrecognized } = classifyStatus(cellValue(ws, r, 13));
+    const linkCell = cellAt(ws, r, 15);
 
     rows.push({
       destination: String(destRaw).trim(),
-      name,
+      name: String(nameRaw).trim(),
+      stars: parseStars(cellValue(ws, r, 3)),
       roomType: roomTypeRaw ? String(roomTypeRaw).trim() : null,
-      checkIn: isoDate(parseFullDate(cellValue(ws, r, 4))),
-      checkOut: isoDate(parseFullDate(cellValue(ws, r, 5))),
+      checkIn,
+      checkOut,
       nights: typeof nightsRaw === 'number' ? nightsRaw : null,
       pricePerNight,
       totalPrice,
       bookedVia: bookedViaRaw != null ? String(bookedViaRaw).trim() || null : null,
       confirmationNumber: confRaw != null ? String(confRaw).trim() || null : null,
-      freeCancelUntil: isoDate(parseFullDate(cellValue(ws, r, 11))),
+      freeCancelUntil: isoDate(parseFullDate(cellValue(ws, r, 12))),
       status,
       paid,
-      notes: [cellValue(ws, r, 13), priceNote, totalNote, unrecognized && `סטטוס לא זוהה: "${unrecognized}"`]
+      notes: [cellValue(ws, r, 14), priceNote, totalNote, unrecognized && `סטטוס לא זוהה: "${unrecognized}"`]
         .filter((x) => x != null && x !== '')
         .map(String)
         .join(' · ') || null,
-      url: linkCell?.l?.Target ?? (typeof cellValue(ws, r, 14) === 'string' ? String(cellValue(ws, r, 14)) : null),
+      url: linkCell?.l?.Target ?? (typeof cellValue(ws, r, 15) === 'string' ? String(cellValue(ws, r, 15)) : null),
     });
   }
   return rows;
@@ -247,7 +264,7 @@ function buildTrip(wb: XLSX.WorkBook): Trip {
     id: `h-${destIdByLabel.get(r.destination)}-${slug(r.name)}`,
     destinationId: destIdByLabel.get(r.destination) ?? slug(r.destination),
     name: r.roomType ? `${r.name} — ${r.roomType}` : r.name,
-    stars: null,
+    stars: r.stars,
     area: 'central',
     status: r.status,
     checkIn: r.checkIn,
@@ -411,6 +428,22 @@ function verify(trip: Trip): { errors: string[]; log: string[] } {
   for (const d of dests) idCounts.set(d.id, (idCounts.get(d.id) ?? 0) + 1);
   const dupIds = [...idCounts.entries()].filter(([, n]) => n > 1).map(([id]) => id).sort();
   if (dupIds.length) errors.push(`מזהי יעדים כפולים: ${dupIds.join(', ')}`);
+
+  // תאריכים הפוכים או משך שהייה בלתי סביר (בד"כ טעות הקלדה בשנה) — מייצרים לילות
+  // שליליים/מנופחים ומעוותים את כל המסלול, אז עדיף לעצור ולבקש לתקן באקסל
+  // מאשר לייבא נתונים שבורים בשקט. סף 21 לילות למלון בודד הוא נדיב בכוונה.
+  const badHotels = trip.hotels.filter((h) => {
+    if (!h.checkIn || !h.checkOut) return false;
+    if (h.checkOut <= h.checkIn) return true;
+    const nights = diffDays(parseIsoDate(h.checkOut), parseIsoDate(h.checkIn));
+    return nights > 21;
+  });
+  if (badHotels.length) {
+    const list = badHotels
+      .map((h) => `"${h.name}" (${h.checkIn} → ${h.checkOut}, כנראה טעות בשנה)`)
+      .join(', ');
+    errors.push(`תאריכים לא סבירים בצ׳ק-אין/אאוט: ${list}`);
+  }
 
   return { errors, log };
 }
